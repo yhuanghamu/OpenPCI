@@ -6,6 +6,7 @@
 *.user
 *.sln.docstates
 *.xlsx
+*.asv
 
 # Build results
 [Dd]ebug/
