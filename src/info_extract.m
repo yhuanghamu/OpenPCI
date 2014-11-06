@@ -78,7 +78,8 @@ function load_raw_Callback(hObject, eventdata, handles)
 % hObject    handle to load_raw (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.dir_raw = uigetdir(pwd,'Select Raw Data Directory to Open');
+handles.dir_info.dir_raw = uigetdir(pwd,'Select Raw Data Directory to Open');
+
 guidata(hObject, handles);
 
 % --- Executes on selection change in edit_proj_ang_range.
@@ -245,7 +246,11 @@ function show_image_btn_Callback(hObject, eventdata, handles)
 % hObject    handle to show_image_btn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+axes(handles.axes1);
+axis off;
+cla;
+firstImage=
+I = read_raw( handles.dir_info.raw, handles );
 
 % --- Executes on button press in reset_raw_info.
 function reset_raw_info_Callback(hObject, eventdata, handles)
