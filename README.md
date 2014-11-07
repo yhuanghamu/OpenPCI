@@ -64,10 +64,10 @@ SoftWare Flowchart Diagram
 Information Extraction.(Parallel implementaion)
     Read Raw interferograms.
     Data Preprocession
-        ROI selection.
+        pre ROI selection.
         Dark-Flood Correction.
         Logarithmic normalization.
-        Rotation axis Calibration.
+        Rotation axis Calibration. (final ROI)
     Information extraction.
         Attenuation signal;
         Differential phase signal;

@@ -22,7 +22,7 @@ function varargout = info_extract(varargin)
 
 % Edit the above text to modify the response to help info_extract
 
-% Last Modified by GUIDE v2.5 06-Nov-2014 21:47:48
+% Last Modified by GUIDE v2.5 07-Nov-2014 18:55:50
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -55,6 +55,24 @@ function info_extract_OpeningFcn(hObject, eventdata, handles, varargin)
 % Choose default command line output for info_extract
 handles.output = hObject;
 
+[pic,map] = imread('NSRL_Logo.gif');% show nsrl logo.
+nsrl_Logo = ind2rgb(pic,map);
+axes(handles.nsrl_logo);
+image(nsrl_Logo);
+axis off
+% button visiblity.
+set(handles.show_image_btn,'enable','off');
+handles.confirm_raw_info_status = 0;
+handles.load_info_status = 0 ;
+
+% Raw data info initialization.
+handles.raw_info.num_of_proj = str2num(get(handles.edit_num_of_proj,'string'));
+handles.raw_info.img_width = str2num(get(handles.edit_img_width,'string'));
+handles.raw_info.img_height = str2num(get(handles.edit_img_height,'string'));
+temp = get(handles.edit_data_type,'string');
+handles.raw_info.data_type = temp{1};
+temp = get(handles.edit_proj_ang_range,'string');
+handles.raw_info.proj_ang_range = str2num(temp{1});
 % Update handles structure
 guidata(hObject, handles);
 
@@ -79,8 +97,12 @@ function load_raw_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 handles.dir_info.dir_raw = uigetdir(pwd,'Select Raw Data Directory to Open');
-
+handles.load_info_status = 1 ;
+if (handles.load_info_status && handles.confirm_raw_info_status)
+    set(handles.show_image_btn,'enable','on');
+end
 guidata(hObject, handles);
+
 
 % --- Executes on selection change in edit_proj_ang_range.
 function edit_proj_ang_range_Callback(hObject, eventdata, handles)
@@ -108,22 +130,22 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on selection change in edit_raw_data_type.
-function edit_raw_data_type_Callback(hObject, eventdata, handles)
-% hObject    handle to edit_raw_data_type (see GCBO)
+% --- Executes on selection change in edit_data_type.
+function edit_data_type_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_data_type (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: contents = cellstr(get(hObject,'String')) returns edit_raw_data_type contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from edit_raw_data_type
+% Hints: contents = cellstr(get(hObject,'String')) returns edit_data_type contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from edit_data_type
 val = get(hObject,'Value');
 str = get(hObject, 'String');
 handles.raw_info.data_type = str{val};
 guidata(hObject,handles)
 
 % --- Executes during object creation, after setting all properties.
-function edit_raw_data_type_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit_raw_data_type (see GCBO)
+function edit_data_type_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_data_type (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -147,6 +169,7 @@ if isinteger(num_of_proj)
     set(hObject, 'String', 0);
     errordlg('Input must be a integer number','Error');
 end
+% set(handles.raw_info.num_of_proj,'Value', num_of_proj);
 handles.raw_info.num_of_proj = num_of_proj;
 guidata(hObject,handles);
 
@@ -246,11 +269,12 @@ function show_image_btn_Callback(hObject, eventdata, handles)
 % hObject    handle to show_image_btn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-axes(handles.axes1);
+axes(handles.img_display);
 axis off;
-cla;
-firstImage=
-I = read_raw( handles.dir_info.raw, handles );
+i=1; %show No.i image.
+show_specific_image( handles.dir_info.dir_raw, handles.raw_info, i );
+guidata(hObject,handles);
+
 
 % --- Executes on button press in reset_raw_info.
 function reset_raw_info_Callback(hObject, eventdata, handles)
@@ -266,5 +290,30 @@ handles.raw_info.proj_ang_range = '180';
 set(handles.edit_num_of_proj, 'String', num2str(handles.raw_info.num_of_proj));
 set(handles.edit_img_width, 'String', num2str(handles.raw_info.img_width));
 set(handles.edit_img_height, 'String', num2str(handles.raw_info.img_height));
-set(handles.edit_raw_data_type,'Value',1);
+set(handles.edit_data_type,'Value',1);
 set(handles.edit_proj_ang_range,'Value',1);
+handles.confirm_raw_info_status = 0;
+set(handles.show_image_btn,'enable','off');
+guidata(hObject,handles);
+
+
+% --- Executes on button press in confirm_raw_info_btn.
+function confirm_raw_info_btn_Callback(hObject, eventdata, handles)
+% hObject    handle to confirm_raw_info_btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.confirm_raw_info_status = 1;
+
+if (handles.load_info_status && handles.confirm_raw_info_status)
+    set(handles.show_image_btn,'enable','on');
+end
+guidata(hObject,handles);
+
+
+% --- Executes on button press in togglebutton1.
+function togglebutton1_Callback(hObject, eventdata, handles)
+% hObject    handle to togglebutton1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of togglebutton1
