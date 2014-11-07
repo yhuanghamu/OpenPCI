@@ -22,7 +22,7 @@ function varargout = info_extract(varargin)
 
 % Edit the above text to modify the response to help info_extract
 
-% Last Modified by GUIDE v2.5 07-Nov-2014 18:55:50
+% Last Modified by GUIDE v2.5 07-Nov-2014 19:30:23
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -73,6 +73,11 @@ temp = get(handles.edit_data_type,'string');
 handles.raw_info.data_type = temp{1};
 temp = get(handles.edit_proj_ang_range,'string');
 handles.raw_info.proj_ang_range = str2num(temp{1});
+
+% axes img_display
+axes(handles.img_display);
+imshow('blank_img.tif');
+axis off;
 % Update handles structure
 guidata(hObject, handles);
 
@@ -96,12 +101,7 @@ function load_raw_Callback(hObject, eventdata, handles)
 % hObject    handle to load_raw (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.dir_info.dir_raw = uigetdir(pwd,'Select Raw Data Directory to Open');
-handles.load_info_status = 1 ;
-if (handles.load_info_status && handles.confirm_raw_info_status)
-    set(handles.show_image_btn,'enable','on');
-end
-guidata(hObject, handles);
+
 
 
 % --- Executes on selection change in edit_proj_ang_range.
@@ -317,3 +317,23 @@ function togglebutton1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Hint: get(hObject,'Value') returns toggle state of togglebutton1
+
+
+% --------------------------------------------------------------------
+function menu_file_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_file (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --------------------------------------------------------------------
+function menu_load_raw_files_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_load_raw_files (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.dir_info.dir_raw = uigetdir(pwd,'Select Raw Data Directory to Open');
+handles.load_info_status = 1 ;
+if (handles.load_info_status && handles.confirm_raw_info_status)
+    set(handles.show_image_btn,'enable','on');
+end
+guidata(hObject, handles);
