@@ -25,6 +25,11 @@ AbsoPath = fullfile(file_dir,strcat('*.',file_type));
 files_info = dir(AbsoPath); % a address list of each orignal data file.
 numfiles = length(files_info); %% number of files
 
+h = waitbar(0,'1','Name','Rename file...',...
+            'CreateCancelBtn',...
+            'setappdata(gcbf,''canceling'',1)'); % waitbar
+setappdata(h,'canceling',0)
+
 for i =1:numfiles
     old_name = files_info(i).name;
     prefix = old_name(1:prefix_length);%get prefix
@@ -37,8 +42,9 @@ for i =1:numfiles
     end
     new_name =strcat(strcat(prefix,file_no),postfix); % add prefix and postfix.
     movefile(old_name,new_name); % Rename files.
+    waitbar(i/numfiles,h,sprintf('%d %%',floor(100*i/numfiles)));
 end
-
+delete(h) ;
 cd(old_dir); % back to main folder.
 
 end
