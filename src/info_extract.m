@@ -22,7 +22,7 @@ function varargout = info_extract(varargin)
 
 % Edit the above text to modify the response to help info_extract
 
-% Last Modified by GUIDE v2.5 07-Nov-2014 19:30:23
+% Last Modified by GUIDE v2.5 08-Nov-2014 18:07:33
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -61,7 +61,8 @@ axes(handles.nsrl_logo);
 image(nsrl_Logo);
 axis off
 % button visiblity.
-set(handles.show_image_btn,'enable','off');
+set(handles.btn_show_image,'enable','off');
+set(handles.btn_rotate_image,'enable','off');
 handles.confirm_raw_info_status = 0;
 handles.load_info_status = 0 ;
 
@@ -264,21 +265,24 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
 end
 
 
-% --- Executes on button press in show_image_btn.
-function show_image_btn_Callback(hObject, eventdata, handles)
-% hObject    handle to show_image_btn (see GCBO)
+% --- Executes on button press in btn_show_image.
+function btn_show_image_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_show_image (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 axes(handles.img_display);
 axis off;
 i=1; %show No.i image.
-show_specific_image( handles.dir_info.dir_raw, handles.raw_info, i );
+I = read_specific_file( handles.dir_info.dir_raw, handles.raw_info, i );
+handles.data_info.fisrt_image = I;
+imshow(I,[min(I(:)) max(I(:))]);
+set(handles.btn_rotate_img,'enable','on'); % enable rotate image button.
 guidata(hObject,handles);
 
 
-% --- Executes on button press in reset_raw_info.
-function reset_raw_info_Callback(hObject, eventdata, handles)
-% hObject    handle to reset_raw_info (see GCBO)
+% --- Executes on button press in btn_reset_raw_info.
+function btn_reset_raw_info_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_reset_raw_info (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 handles.raw_info.num_of_proj = 500;
@@ -293,19 +297,19 @@ set(handles.edit_img_height, 'String', num2str(handles.raw_info.img_height));
 set(handles.edit_data_type,'Value',1);
 set(handles.edit_proj_ang_range,'Value',1);
 handles.confirm_raw_info_status = 0;
-set(handles.show_image_btn,'enable','off');
+set(handles.btn_show_image,'enable','off');
 guidata(hObject,handles);
 
 
-% --- Executes on button press in confirm_raw_info_btn.
-function confirm_raw_info_btn_Callback(hObject, eventdata, handles)
-% hObject    handle to confirm_raw_info_btn (see GCBO)
+% --- Executes on button press in btn_confirm_raw_info.
+function btn_confirm_raw_info_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_confirm_raw_info (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 handles.confirm_raw_info_status = 1;
 
 if (handles.load_info_status && handles.confirm_raw_info_status)
-    set(handles.show_image_btn,'enable','on');
+    set(handles.btn_show_image,'enable','on');
 end
 guidata(hObject,handles);
 
@@ -334,6 +338,72 @@ function menu_load_raw_files_Callback(hObject, eventdata, handles)
 handles.dir_info.dir_raw = uigetdir(pwd,'Select Raw Data Directory to Open');
 handles.load_info_status = 1 ;
 if (handles.load_info_status && handles.confirm_raw_info_status)
-    set(handles.show_image_btn,'enable','on');
+    set(handles.btn_show_image,'enable','on');
 end
+
 guidata(hObject, handles);
+
+
+% --------------------------------------------------------------------
+function menu_load_dark_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_load_dark (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% handles.dir_info.dir_dark = uigetfile(pwd,'Select the Dark background file');
+[filename, pathname] =uigetfile(pwd,'Select the Dark background file');
+handles.dir_info.dir_dark = [pathname filename];
+guidata(hObject, handles);
+
+
+% --------------------------------------------------------------------
+function menu_load_refer_files_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_load_refer_files (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.dir_info.dir_refer = uigetdir(pwd,'Select Reference Data Directory to Open');
+guidata(hObject, handles);
+
+
+% --- Executes on button press in btn_rotate_image.
+function btn_rotate_image_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_rotate_image (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+I = handles.data_info.fisrt_image;
+rotate_angle = str2num(get(handles.edit_rotate_angle,'String'));
+J = imrotate(I,rotate_angle,'bilinear','crop');
+handles.data_info.rotate_image = J;
+axes(img_display);
+imshow(J,[min(J(:)) max(J(:))]);
+guidata(hObject, handles);
+
+
+function edit_rotate_angle_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_rotate_angle (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_rotate_angle as text
+%        str2double(get(hObject,'String')) returns contents of edit_rotate_angle as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_rotate_angle_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_rotate_angle (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in btn_set_ROI.
+function btn_set_ROI_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_set_ROI (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+[xo yo] = ginput(2);
+i=1;
