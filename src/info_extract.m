@@ -65,8 +65,8 @@ pwd = 'J:\Spider';
 handles.dir_info.dir_raw = uigetdir(pwd,'Select Raw Data Directory to Open');
 handles.load_info_status = 1 ;
 
-[filename, pathname] =uigetfile(pwd,'Select the Dark background file');
-handles.dir_info.dir_dark = [pathname filename];
+handles.dir_info.dir_dark =uigetdir(pwd,'Select the Dark background file');
+
 
 handles.dir_info.dir_refer = uigetdir(pwd,'Select Reference Data Directory to Open');
 
