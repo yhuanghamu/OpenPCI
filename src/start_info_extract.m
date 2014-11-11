@@ -19,7 +19,7 @@ mkdir(dir_Darkfield);
 %% Read background darkfield image.
 I_background = read_specific_file( handles.dir_dark, handles.raw_info, 1  );
 %% Calculate Reference projections/
-[Y0_r,argY1_r,Y1_r,num_steps] = cal_refer(handles.dir_refer,handles.raw_info,I_background);
+[Y0_r,argY1_r,Y1_r,num_steps] = cal_refer(handles.dir_refer,handles.raw_info,preproc_info,I_background);
 
 
 %% Calculate Raw projections and Information Extraction.
@@ -34,7 +34,7 @@ for i = 1:numsteps:numfiles
         break
     end
     
-    [Y0_s,argY1_s,Y1_s] = cal_raw(handles.dir_raw,handles.raw_info,I_background,i);
+    [Y0_s,argY1_s,Y1_s] = cal_raw(handles.dir_raw,handles.raw_info,preproc_info,I_background,i);
     
     A = -lg10(Y0_s/Y0_r);
     P = p2/(2*pi*d)(argY1_s-argY1_r);
