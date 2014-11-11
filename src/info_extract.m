@@ -22,7 +22,7 @@ function varargout = info_extract(varargin)
 
 % Edit the above text to modify the response to help info_extract
 
-% Last Modified by GUIDE v2.5 11-Nov-2014 15:40:26
+% Last Modified by GUIDE v2.5 11-Nov-2014 17:32:46
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -61,6 +61,7 @@ axes(handles.nsrl_logo);
 image(nsrl_Logo);
 axis off
 % Set directory infomation.
+pwd = 'J:\Spider';
 handles.dir_info.dir_raw = uigetdir(pwd,'Select Raw Data Directory to Open');
 handles.load_info_status = 1 ;
 
@@ -69,10 +70,11 @@ handles.dir_info.dir_dark = [pathname filename];
 
 handles.dir_info.dir_refer = uigetdir(pwd,'Select Reference Data Directory to Open');
 
-handles.dir_info.dir_extract = uigetdir(pwd,'Select Extract Director ');
+handles.dir_info.dir_extract = uigetdir(pwd,'Select Extract Directory ');
 % button visiblity.
 set(handles.btn_show_image,'enable','off');
 set(handles.btn_rotate_image,'enable','off');
+set(handles.btn_set_ROI,'enable','off');
 handles.confirm_raw_info_status = 0;
 
 
@@ -92,12 +94,14 @@ axis off;
 
 % set Preprocessing parameter.
 handles.preproc_info.rotate_angle = 0;
-handles.preproc_info.first_image = 0;
 handles.preproc_info.ROI_xmin = 0;
 handles.preproc_info.ROI_xmax = 0;
 handles.preproc_info.ROI_ymin = 0;
 handles.preproc_info.ROI_ymax = 0;
 handles.preproc_info.axis_cali =0;
+
+% set data handles
+handles.data_info.first_image = 0 ;
 % Update handles structure
 guidata(hObject, handles);
 
@@ -326,11 +330,11 @@ function btn_confirm_raw_info_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_confirm_raw_info (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-handles.confirm_raw_info_status = 1;
-
-if (handles.load_info_status && handles.confirm_raw_info_status)
-    set(handles.btn_show_image,'enable','on');
-end
+% handles.confirm_raw_info_status = 1;
+set(handles.btn_show_image,'enable','on');
+% if (handles.load_info_status && handles.confirm_raw_info_status)
+%     set(handles.btn_show_image,'enable','on');
+% end
 guidata(hObject,handles);
 
 
@@ -389,13 +393,15 @@ function btn_rotate_image_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_rotate_image (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-I = handles.data_info.fisrt_image;
+I = handles.data_info.first_image ;
 rotate_angle = str2num(get(handles.edit_rotate_angle,'String'));
 J = imrotate(I,rotate_angle,'bilinear','crop');
 handles.data_info.rotate_image = J;
+handles.preproc_info.rotate_angle =  rotate_angle;
 axes(handles.img_display);
 imshow(J,[min(J(:)) max(J(:))]);
-axis off£»
+axis off
+set(handles.btn_set_ROI,'enable','on');
 guidata(hObject, handles);
 
 
@@ -426,7 +432,11 @@ function btn_set_ROI_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_set_ROI (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[xo yo] = ginput(2);
+[xo,yo] = ginput(2);
+handles.preproc_info.ROI_xmin = floor(min(xo));
+handles.preproc_info.ROI_xmax = floor(max(xo));
+handles.preproc_info.ROI_ymin = floor(min(yo));
+handles.preproc_info.ROI_ymax = floor(max(yo));
 
 
 % --------------------------------------------------------------------
@@ -446,8 +456,9 @@ function btn_auto_axis_cali_Callback(hObject, eventdata, handles)
 % Hint: get(hObject,'Value') returns toggle state of btn_auto_axis_cali
 
 
-% --- Executes on button press in btn_info_extract.
-function btn_info_extract_Callback(hObject, eventdata, handles)
-% hObject    handle to btn_info_extract (see GCBO)
+% --- Executes on button press in btn_start_info_extract.
+function btn_start_info_extract_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_start_info_extract (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+start_info_extract(handles);

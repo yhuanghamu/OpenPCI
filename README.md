@@ -94,7 +94,6 @@ raw_info
     proj_ang_range
 preproc_info    
     rotate_angle
-    first_image
     ROI_xmin
     ROI_xmax
     ROI_ymin
@@ -109,6 +108,7 @@ dir_info
     dir_extract
 data_info
     first_image
+    rotate_image
     
 Reference:
     http://www.mathworks.cn/help/signal/examples/signal-generation-and-visualization.html
