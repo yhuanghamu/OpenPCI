@@ -22,7 +22,7 @@ function varargout = info_extract(varargin)
 
 % Edit the above text to modify the response to help info_extract
 
-% Last Modified by GUIDE v2.5 08-Nov-2014 18:07:33
+% Last Modified by GUIDE v2.5 11-Nov-2014 15:40:26
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -60,11 +60,21 @@ nsrl_Logo = ind2rgb(pic,map);
 axes(handles.nsrl_logo);
 image(nsrl_Logo);
 axis off
+% Set directory infomation.
+handles.dir_info.dir_raw = uigetdir(pwd,'Select Raw Data Directory to Open');
+handles.load_info_status = 1 ;
+
+[filename, pathname] =uigetfile(pwd,'Select the Dark background file');
+handles.dir_info.dir_dark = [pathname filename];
+
+handles.dir_info.dir_refer = uigetdir(pwd,'Select Reference Data Directory to Open');
+
+handles.dir_info.dir_extract = uigetdir(pwd,'Select Extract Director ');
 % button visiblity.
 set(handles.btn_show_image,'enable','off');
 set(handles.btn_rotate_image,'enable','off');
 handles.confirm_raw_info_status = 0;
-handles.load_info_status = 0 ;
+
 
 % Raw data info initialization.
 handles.raw_info.num_of_proj = str2num(get(handles.edit_num_of_proj,'string'));
@@ -79,6 +89,15 @@ handles.raw_info.proj_ang_range = str2num(temp{1});
 axes(handles.img_display);
 imshow('blank_img.tif');
 axis off;
+
+% set Preprocessing parameter.
+handles.preproc_info.rotate_angle = 0;
+handles.preproc_info.first_image = 0;
+handles.preproc_info.ROI_xmin = 0;
+handles.preproc_info.ROI_xmax = 0;
+handles.preproc_info.ROI_ymin = 0;
+handles.preproc_info.ROI_ymax = 0;
+handles.preproc_info.axis_cali =0;
 % Update handles structure
 guidata(hObject, handles);
 
@@ -274,9 +293,10 @@ axes(handles.img_display);
 axis off;
 i=1; %show No.i image.
 I = read_specific_file( handles.dir_info.dir_raw, handles.raw_info, i );
-handles.data_info.fisrt_image = I;
+handles.data_info.first_image = I;
 imshow(I,[min(I(:)) max(I(:))]);
-set(handles.btn_rotate_img,'enable','on'); % enable rotate image button.
+axis off;
+set(handles.btn_rotate_image,'enable','on'); % enable rotate image button.
 guidata(hObject,handles);
 
 
@@ -373,8 +393,9 @@ I = handles.data_info.fisrt_image;
 rotate_angle = str2num(get(handles.edit_rotate_angle,'String'));
 J = imrotate(I,rotate_angle,'bilinear','crop');
 handles.data_info.rotate_image = J;
-axes(img_display);
+axes(handles.img_display);
 imshow(J,[min(J(:)) max(J(:))]);
+axis off£»
 guidata(hObject, handles);
 
 
@@ -406,4 +427,27 @@ function btn_set_ROI_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 [xo yo] = ginput(2);
-i=1;
+
+
+% --------------------------------------------------------------------
+function menu_export_preproc_img_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_export_preproc_img (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.dir_info.dir_preproc = uigetdir(pwd,'Select export Preprocess image Directory.');
+
+
+% --- Executes on button press in btn_auto_axis_cali.
+function btn_auto_axis_cali_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_auto_axis_cali (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of btn_auto_axis_cali
+
+
+% --- Executes on button press in btn_info_extract.
+function btn_info_extract_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_info_extract (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)

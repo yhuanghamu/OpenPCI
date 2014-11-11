@@ -68,6 +68,7 @@ Information Extraction.(Parallel implementaion)
         Image rotation and ROI selection.
             set rotation angle.
             set ROI range.
+            Rotation axis Calibration.
         Dark field Correction.
             load dark field image.
         Rotation axis Calibration. (final ROI)
@@ -84,8 +85,39 @@ Export Slice images.
     .tif
 
 ---------------------------------------------------
+Data Structure
+raw_info
+    num_of_proj
+    img_width
+    img_height
+    data_type
+    proj_ang_range
+preproc_info    
+    rotate_angle
+    first_image
+    ROI_xmin
+    ROI_xmax
+    ROI_ymin
+    ROI_ymax
+    axis_cali
+   
+dir_info
+    dir_raw
+    dir_dark
+    dir_refer
+    dir_preproc
+    dir_extract
+data_info
+    first_image
+    
 Reference:
     http://www.mathworks.cn/help/signal/examples/signal-generation-and-visualization.html
+21 huang 60 1200
+9 pan  1000 9000
+20 gebu  40  800
+53 mm  80   4000
+3 dan  1500 4500
+1 fa   16500 16500
 
 
 
