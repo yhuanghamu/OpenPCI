@@ -22,7 +22,7 @@ function varargout = reconstruction(varargin)
 
 % Edit the above text to modify the response to help reconstruction
 
-% Last Modified by GUIDE v2.5 06-Nov-2014 17:25:07
+% Last Modified by GUIDE v2.5 13-Nov-2014 20:18:00
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -55,6 +55,9 @@ function reconstruction_OpeningFcn(hObject, eventdata, handles, varargin)
 % Choose default command line output for reconstruction
 handles.output = hObject;
 
+% button visualbility.
+set(handles.btn_dark_recon,'enable','off');
+
 % Update handles structure
 guidata(hObject, handles);
 
@@ -73,8 +76,26 @@ function varargout = reconstruction_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
+
+
+% --- Executes on button press in btn_dark_recon.
+function btn_dark_recon_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_dark_recon (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+recon3D_darkfield(handles.dir_info.dir_darkfield,handles);
+
+% --------------------------------------------------------------------
+function menu_file_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_file (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --------------------------------------------------------------------
+function menu_load_dark_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_load_dark (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.dir_info.dir_darkfield = uigetdir(pwd,'Select Dark field projection Directory to Open');
+set(handles.btn_dark_recon,'enable','on');
