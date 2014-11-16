@@ -1,17 +1,12 @@
 OpenPCI
 =======
-
 OpenPcI:A Fast and User Friendly Open Source Software for Grating Based Phase-contrast Imaging Tomography.
-OpenPcI
 ****************************************************************
-OpenPcI: A Fast and User Friendly Open Source Software for Grating Based Phase-contrast Imaging Tomography.
+
 
 This is a software to do 3D Phase contrast Imaging Tomography reconstruction.
 
-At initial phase, only parallel beam geometry will be added. Although parallel beam geometry is simple, 
-it is common seen in Synchrontron radiation source application. In the cone-beam geometry, while the 
-dimension of object is small compared to the source-to-axis distance, it can be considered as parallel beam 
-reconstruction. 
+At initial phase, only parallel beam geometry will be added. Although parallel beam geometry is simple, it is common seen in Synchrontron radiation source application. In the cone-beam geometry, while the dimension of object is small compared to the source-to-axis distance, it can be considered as parallel beam reconstruction. 
 
 TODO:
 

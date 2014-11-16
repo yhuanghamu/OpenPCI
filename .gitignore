@@ -7,6 +7,8 @@
 *.sln.docstates
 *.xlsx
 *.asv
+*.mat
+*.tif
 
 # Build results
 [Dd]ebug/
