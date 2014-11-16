@@ -7,6 +7,6 @@ numfiles = length(files_info); %% number of files
 file_name = fullfile(dir_info,files_info(i).name);
 I  = read_raw( file_name, raw_info );
 % imshow(I,[ min(I(:)) max(I(:))]);
-axis off;
+% axis off;
 end
 
