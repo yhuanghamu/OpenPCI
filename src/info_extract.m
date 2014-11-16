@@ -94,11 +94,11 @@ axis off;
 
 % set Preprocessing parameter.
 handles.preproc_info.rotate_angle = 0;
-handles.preproc_info.ROI_xmin = 0;
-handles.preproc_info.ROI_xmax = 0;
-handles.preproc_info.ROI_ymin = 0;
-handles.preproc_info.ROI_ymax = 0;
-handles.preproc_info.axis_cali =0;
+% handles.preproc_info.ROI_xmin = 0;
+% handles.preproc_info.ROI_xmax = 0;
+% handles.preproc_info.ROI_ymin = 0;
+% handles.preproc_info.ROI_ymax = 0;
+% handles.preproc_info.axis_cali =0;
 
 % set data handles
 handles.data_info.first_image = 0 ;
@@ -432,11 +432,17 @@ function btn_set_ROI_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_set_ROI (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-[xo,yo] = ginput(2);
-handles.preproc_info.ROI_xmin = floor(min(xo));
-handles.preproc_info.ROI_xmax = floor(max(xo));
-handles.preproc_info.ROI_ymin = floor(min(yo));
-handles.preproc_info.ROI_ymax = floor(max(yo));
+% [xo,yo] = ginput(2);
+% [~,~,I2,rect] =imcrop(handles.data_info.first_image);
+[~,~,I2,rect]= imcrop(handles.img_display);
+imshow(I2,[min(I2(:)) max(I2(:))]);
+handles.preproc_info.ROI = rect;
+axis off
+guidata(hObject, handles);
+% handles.preproc_info.ROI_xmin = floor(rect(1));
+% handles.preproc_info.ROI_xmax = floor(rect(4)-1);
+% handles.preproc_info.ROI_ymin = floor(rect(2));
+% handles.preproc_info.ROI_ymax = floor(rect(3)-1);
 
 
 % --------------------------------------------------------------------
