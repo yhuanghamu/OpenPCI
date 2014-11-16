@@ -57,9 +57,9 @@ for i = 1:num_steps:numfiles
     D(D(:)>1) = 1;%
     
     prefix ='';
-    export_mat(A,dir_Atten,floor(i/5)+1,prefix);
-    export_mat(P,dir_Diffphase,floor(i/5)+1,prefix);
-    export_mat(D,dir_Darkfield,floor(i/5)+1,prefix);
+    export_mat(A,dir_Atten,floor(i/5)+1,prefix,'single');
+    export_mat(P,dir_Diffphase,floor(i/5)+1,prefix,'single');
+    export_mat(D,dir_Darkfield,floor(i/5)+1,prefix,'single');
 %     export_tif(A,dir_Atten,floor(i/5)+1,prefix);
 %     export_tif(P,dir_Diffphase,floor(i/5)+1,prefix);
 %     export_tif(D,dir_Darkfield,floor(i/5)+1,prefix);
