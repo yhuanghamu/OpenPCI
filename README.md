@@ -101,6 +101,9 @@ dir_info
     dir_refer
     dir_preproc
     dir_extract
+    dir_dark
+    dir_absorp
+    dir_phase
 data_info
     first_image
     rotate_image
