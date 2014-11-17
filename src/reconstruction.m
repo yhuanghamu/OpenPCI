@@ -22,7 +22,7 @@ function varargout = reconstruction(varargin)
 
 % Edit the above text to modify the response to help reconstruction
 
-% Last Modified by GUIDE v2.5 13-Nov-2014 20:18:00
+% Last Modified by GUIDE v2.5 17-Nov-2014 13:29:32
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -57,7 +57,8 @@ handles.output = hObject;
 
 % button visualbility.
 set(handles.btn_dark_recon,'enable','off');
-
+set(handles.btn_phase_recon,'enable','off');
+set(handles.btn_absorp_recon,'enable','off');
 % Update handles structure
 guidata(hObject, handles);
 
@@ -84,6 +85,8 @@ function btn_dark_recon_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 recon3D_darkfield(handles.dir_info.dir_darkfield,handles);
+% Update handles structure
+guidata(hObject, handles);
 
 % --------------------------------------------------------------------
 function menu_file_Callback(hObject, eventdata, handles)
@@ -99,3 +102,37 @@ function menu_load_dark_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 handles.dir_info.dir_darkfield = uigetdir(pwd,'Select Dark field projection Directory to Open');
 set(handles.btn_dark_recon,'enable','on');
+
+
+% --- Executes on button press in btn_phase_recon.
+function btn_phase_recon_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_phase_recon (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+recon3D_diffphase(handles.dir_info.dir_phase,handles);
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes on button press in btn_absorp_recon.
+function btn_absorp_recon_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_absorp_recon (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+recon3D_absorp(handles.dir_info.dir_absorp,handles);
+% Update handles structure
+guidata(hObject, handles);
+% --------------------------------------------------------------------
+function menu_load_phase_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_load_phase (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.dir_info.dir_phase = uigetdir(pwd,'Select differential phase contrast projection Directory to Open');
+set(handles.btn_phase_recon,'enable','on');
+
+% --------------------------------------------------------------------
+function menu_load_absorp_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_load_absorp (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.dir_info.dir_absorp = uigetdir(pwd,'Select absorption projection Directory to Open');
+set(handles.btn_absorp_recon,'enable','on');
