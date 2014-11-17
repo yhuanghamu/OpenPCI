@@ -1,18 +1,20 @@
-function [  R ] = recon3D_darkfield( dir_darkfield,handles )
-%RECON3D_DARKFIELD 
-%   
-AbsoPath = strcat(dir_darkfield,'\*.tif');
+function [ edge_left,edge_right, R] = recon3D_darkfield( dir_darkfield,handles  )
+
+AbsoPath = strcat(dir_darkfield,'\*.mat');
 ImgFiles = dir(AbsoPath); % a address list of each file.
 numfiles = length(ImgFiles); %% number of files
 cd (dir_darkfield);
 
-I_Temp = imread(ImgFiles(1).name);
-[imWidth, imHeight] = size(I_Temp);
-
+load(ImgFiles(1).name);
+[imWidth, imHeight] = size(data);
+I = single(zeros(imWidth,imHeight,numfiles));
 for i = 1:numfiles
-    I(:,:,i) = imread(ImgFiles(i).name);
+    load(ImgFiles(i).name);
+    I(:,:,i) = single(data);
 end
-[ proj_cali ] = axis_cali( I,imWidth );
+refer_section = 525;
+% [ proj_cali ] = axis_cali( I,refer_section );
+[edge_left,edge_right,proj_cali ] = axis_cali_dark( I,refer_section );
 [~,imHeight_2,~] = size(proj_cali);
 for i = 1:imWidth
     I_section = reshape(proj_cali(i,:,:),imHeight_2,numfiles);
@@ -20,6 +22,5 @@ for i = 1:imWidth
     disp(script);
     R(:,:,i) = iradon(I_section,0:0.3581:179,'Ram-Lak');
 end
-
-
+end
 
