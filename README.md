@@ -110,13 +110,8 @@ data_info
     
 Reference:
     http://www.mathworks.cn/help/signal/examples/signal-generation-and-visualization.html
-21 huang 60 1200
-9 pan  1000 9000
-20 gebu  40  800
-53 mm  80   4000
-3 dan  1500 4500
-1 fa   16500 16500
-
+Ring artifact removal
+rangefilt
 
 
 
