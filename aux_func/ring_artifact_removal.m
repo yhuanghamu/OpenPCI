@@ -1,13 +1,15 @@
 function [ f_corr ,delta_f] = ring_artifact_removal( f_0,T_max,T_min,ring_center )
 %RING_ARTIFACT_REMOVAL This function is used to remove the ring artifacts of reconstructed image.
 % usuage:
-%  [ I_rm_ring ] = ring_artifact_removal( I_ring,T_max,T_min )
+%  [f_corr ,delta_f] = ring_artifact_removal( f_0,T_max,T_min,ring_center )
 % where:
 %   f_0: denotes the original image with ring artifacts.
 %   T_max: denotes the upper threshold of ring artifacts value.
 %   T_min: denote the lower threshold of ring artifacts value.
+%   ring_center.x0/.y0: denote the ring artifact center coordinates.
 %   f_corr : denote the final image without ring artifacts.
-%   ring_center: denote the ring artifact center coordinates.
+%   delta_f: denote ring artifact image.
+
    
 [Iwidth, Iheight] = size(f_0);
 f_thres = uint16(zeros(Iwidth, Iheight));
