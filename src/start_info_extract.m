@@ -47,14 +47,14 @@ for i = 1:num_steps:numfiles
         I_background,ImgFiles,num_steps,i);
     
     A = log(Y0_r./Y0_s);
-    A(A(:)<0) = 0; %
+%     A(A(:)<0) = 0; %
     
     p2=1; %grating parameter
     d =1; %grating parameter
     P = p2/(2*pi*d)*angle(Y1_s./Y1_r);
     
     D = abs(Y1_s)./Y0_s.*Y0_r./abs(Y1_r);
-    D(D(:)>1) = 1;%
+%     D(D(:)>1) = 1;%
     
     prefix ='';
     export_mat(A,dir_Atten,floor(i/5)+1,prefix,'single');

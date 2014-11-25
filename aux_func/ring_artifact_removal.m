@@ -12,8 +12,8 @@ function [ f_corr ,delta_f] = ring_artifact_removal( f_0,T_max,T_min,ring_center
 
    
 [Iwidth, Iheight] = size(f_0);
-f_thres = uint16(zeros(Iwidth, Iheight));
-delta_f = f_thres;
+f_thres = zeros(Iwidth, Iheight);
+% delta_f = f_thres;
 f_M = f_thres;
 f_corr = f_thres;
 
@@ -39,14 +39,14 @@ dxy = (dx+dy)/2;%mean image pixel size.
 b = 1; %pixel-binning factor.
 dRA =(RF/(RD+RF))*duv*b/dxy;%circular artifact size.
 
-xs = uint16(zeros(2*M_rad+1,1));
+xs = zeros(2*M_rad+1,1);
 ys = xs;
 fs = xs;
 % processNo = 1;
 % f_0(257,294)=0;
 for x=1:Iwidth
     for y = 1:Iheight
-        if((f_0(x,y)~=0)&&~((x==257)&&(y == 294)))
+        if((f_0(x,y)~=0)&&~((x==x0)&&(y == y0)))
 %             sct =sprintf('x=%d,y=%d',x,y);
 %             disp(sct);
             dx = x - x0;
