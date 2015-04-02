@@ -113,6 +113,8 @@ Reference:
 Ring artifact removal
 rangefilt
 
+---------------------------------------------------
+guide OpenPCI_main: edit gui
 
 
 
