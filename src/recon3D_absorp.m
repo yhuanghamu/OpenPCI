@@ -16,11 +16,8 @@ for i = 1:numfiles
 end
 % refer_section = floor(600);
 % [ proj_cali ] = axis_cali( I,refer_section );
-allownance = 200;
-PMMAWidth_mean = 507;
+
 for i = 1:numfiles
-    img_LeftIndex(i) = edge_left(i) - floor(allownance/2);%Lefe_edge
-    img_RightIndex(i) = img_LeftIndex(i) + PMMAWidth_mean+allownance;%right_edge
     proj_cali(:,:,i) =  I(:,img_LeftIndex(i):img_RightIndex(i),i);
 end
 [~,imHeight_2,~] = size(proj_cali);

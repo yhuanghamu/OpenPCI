@@ -1,4 +1,4 @@
-function [ edge_left,edge_right,proj_cali ] = axis_cali_dark( projection,refer_section_No )
+function [ img_LeftIndex,img_RightIndex,proj_cali ] = axis_cali_dark( projection,refer_section_No )
 %AXIS_CALI 
 %
 [imwidth, imHeight,numproj ] = size(projection);

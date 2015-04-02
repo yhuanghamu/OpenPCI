@@ -12,7 +12,7 @@ for i = 1:numfiles
     load(ImgFiles(i).name);
     I(:,:,i) = single(data);
 end
-refer_section = 525;
+refer_section = imWidth; % last section.
 % [ proj_cali ] = axis_cali( I,refer_section );
 [edge_left,edge_right,proj_cali ] = axis_cali_dark( I,refer_section );
 [~,imHeight_2,~] = size(proj_cali);
