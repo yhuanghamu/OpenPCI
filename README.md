@@ -1,6 +1,8 @@
 OpenPCI
 =======
-OpenPcI:A Fast and User Friendly Open Source Software for Grating Based Phase-contrast Imaging Tomography.
+OpenPcI:A Fast and User Friendly Open Source Software for Grating Based Phase-contrast Imaging Tomography
+Contact: stevenhuang4321@gmail.com
+Freely available at: https://github.com/StevenHuang4321/OpenPCI
 ****************************************************************
 
 
@@ -50,71 +52,71 @@ test:
     test.m  Temp test file.
 Appendix:
     firstOrderDiffProjSimu.m
+    
+---
+**SoftWare Flowchart Diagram**
 
-****************************************************************
+    1. Read Raw interferograms.
 
-SoftWare Flowchart Diagram
-
-****************************************************************
-Information Extraction.(Parallel implementaion)
-    Read Raw interferograms.
-
-    Data Preprocession
-        Image rotation and ROI selection.
-            set rotation angle.
-            set ROI range.
+    2. Data Preprocession
+        2.1		Image rotation and ROI selection.
+        2.1.1 	set rotation angle.
+        2.1.2	set ROI range.
             Rotation axis Calibration.
         Dark field Correction.
             load dark field image.
         Rotation axis Calibration. (final ROI)
-    Information extraction.
+    3. Phase Information retreival.(Parallel implementaion)
         Attenuation signal;
         Differential phase signal;
         Drak-field signal.
-Reconstruction.        
+	4. Reconstruction.        
     Filter-Selection.
     Parallel Beam Reconstruction.
 
-Export Slice images.
-    .dcm
-    .tif
+	5. Export Slice images.
+    	.dcm
+    	.tif
+---
+**Data Structure**
+1. raw_info
+    - num_of_proj
+    - img_width
+    - img_height
+    - data_type
+    - proj_ang_range
+2. preproc_info:
+    - rotate_angle
+    - ROI_xmin
+    - ROI_xmax
+    - ROI_ymin
+    - ROI_ymax
+    - axis_cali
 
----------------------------------------------------
-Data Structure
-raw_info
-    num_of_proj
-    img_width
-    img_height
-    data_type
-    proj_ang_range
-preproc_info    
-    rotate_angle
-    ROI_xmin
-    ROI_xmax
-    ROI_ymin
-    ROI_ymax
-    axis_cali
-   
-dir_info
-    dir_raw
-    dir_dark
-    dir_refer
-    dir_preproc
-    dir_extract
-    dir_dark
-    dir_absorp
-    dir_phase
-data_info
-    first_image
-    rotate_image
-    
-Reference:
+3. dir_info:
+	- dir_raw
+    - dir_dark
+    - dir_refer
+    - dir_preproc
+    - dir_extract
+    - dir_dark
+    - dir_absorp
+    - dir_phase
+4. data_info:
+    - first_image
+    - rotate_image
+
+---
+**Reference:**
     http://www.mathworks.cn/help/signal/examples/signal-generation-and-visualization.html
 Ring artifact removal
 rangefilt
 
----------------------------------------------------
+---
+**Some useful matlab command**
 guide OpenPCI_main: edit gui
+edit pathdef:	edit default working path, and save the result permanently.
+rehash:	refresh function and file system path chches  without of restarting matlab.
 
 
 
