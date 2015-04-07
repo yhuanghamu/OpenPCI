@@ -22,7 +22,7 @@ function varargout = OpenPCI_main(varargin)
 
 % Edit the above text to modify the response to help OpenPCI_main
 
-% Last Modified by GUIDE v2.5 06-Nov-2014 17:29:04
+% Last Modified by GUIDE v2.5 07-Apr-2015 19:50:03
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -116,3 +116,33 @@ case 'Yes'
 	%                  .
 	delete(handles.main);
 end
+
+
+% --------------------------------------------------------------------
+function menu_about_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_about (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --------------------------------------------------------------------
+function menu_file_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_file (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --------------------------------------------------------------------
+function menu_readme_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_readme (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+dos('notepad README.md &');
+
+
+% --------------------------------------------------------------------
+function menu_licence_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_licence (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+dos('notepad LICENSE &');
