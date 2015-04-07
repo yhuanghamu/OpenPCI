@@ -22,7 +22,7 @@ function varargout = info_extract(varargin)
 
 % Edit the above text to modify the response to help info_extract
 
-% Last Modified by GUIDE v2.5 11-Nov-2014 17:32:46
+% Last Modified by GUIDE v2.5 07-Apr-2015 20:32:00
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -61,9 +61,9 @@ axes(handles.nsrl_logo);
 image(nsrl_Logo);
 axis off
 % Set directory infomation.
-pwd = 'J:\Spider';
+pwd = 'K:\Spider';
 handles.dir_info.dir_raw = uigetdir(pwd,'Select Raw Data Directory to Open');
-handles.load_info_status = 1 ;
+handles.load_info_status = 0 ;
 
 handles.dir_info.dir_dark =uigetdir(pwd,'Select the Dark background file');
 
@@ -468,3 +468,167 @@ function btn_start_info_extract_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 start_info_extract(handles);
+
+
+
+function edit_dir_raw_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_dir_raw (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_dir_raw as text
+%        str2double(get(hObject,'String')) returns contents of edit_dir_raw as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_dir_raw_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_dir_raw (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit_dir_dark_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_dir_dark (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_dir_dark as text
+%        str2double(get(hObject,'String')) returns contents of edit_dir_dark as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_dir_dark_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_dir_dark (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit_dir_flat_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_dir_flat (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_dir_flat as text
+%        str2double(get(hObject,'String')) returns contents of edit_dir_flat as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_dir_flat_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_dir_flat (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit_dir_refer_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_dir_refer (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_dir_refer as text
+%        str2double(get(hObject,'String')) returns contents of edit_dir_refer as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_dir_refer_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_dir_refer (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit_dir_extract_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_dir_extract (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_dir_extract as text
+%        str2double(get(hObject,'String')) returns contents of edit_dir_extract as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit_dir_extract_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_dir_extract (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in btn_dir_raw.
+function btn_dir_raw_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_dir_raw (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles.dir_info.dir_raw = uigetdir(pwd,'Select Raw Data Directory');
+handles.load_info_status = 1 ;
+set(handles.edit_dir_raw, 'String', handles.dir_info.dir_raw);
+
+
+% --- Executes on button press in btn_dir_dark.
+function btn_dir_dark_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_dir_dark (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles.dir_info.dir_dark =uigetdir(pwd,'Select the Dark background file');
+set(handles.edit_dir_dark, 'String', handles.dir_info.dir_dark);
+
+
+
+% --- Executes on button press in btn_dir_flat.
+function btn_dir_flat_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_dir_flat (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.dir_info.dir_flat =uigetdir(pwd,'Select the flat filed file');
+set(handles.edit_dir_flat, 'String', handles.dir_info.dir_flat);
+
+% --- Executes on button press in btn_dir_ref.
+function btn_dir_ref_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_dir_ref (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles.dir_info.dir_refer = uigetdir(pwd,'Select Reference Data Directory to Open');
+set(handles.edit_dir_refer, 'String', handles.dir_info.dir_refer);
+
+
+% --- Executes on button press in btn_dir_extract.
+function btn_dir_extract_Callback(hObject, eventdata, handles)
+% hObject    handle to btn_dir_extract (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+handles.dir_info.dir_extract = uigetdir(pwd,'Select Extract Directory ');
+set(handles.edit_dir_extract, 'String', handles.dir_info.dir_extract);
