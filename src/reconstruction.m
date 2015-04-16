@@ -56,9 +56,12 @@ function reconstruction_OpeningFcn(hObject, eventdata, handles, varargin)
 handles.output = hObject;
 
 % button visualbility.
-set(handles.btn_dark_recon,'enable','off');
-set(handles.btn_phase_recon,'enable','off');
-set(handles.btn_absorp_recon,'enable','off');
+set(handles.btn_dark_recon,'enable','on');
+set(handles.btn_phase_recon,'enable','on');
+set(handles.btn_absorp_recon,'enable','on');
+%set(handles.btn_dark_recon,'enable','off');
+%set(handles.btn_phase_recon,'enable','off');
+%set(handles.btn_absorp_recon,'enable','off');
 % Update handles structure
 guidata(hObject, handles);
 
@@ -84,6 +87,7 @@ function btn_dark_recon_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_dark_recon (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+handles.dir_info.dir_darkfield = uigetdir(pwd,'Select Dark field projection Directory to Open');
 recon3D_darkfield(handles.dir_info.dir_darkfield,handles);
 % Update handles structure
 guidata(hObject, handles);
@@ -109,6 +113,7 @@ function btn_phase_recon_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_phase_recon (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+handles.dir_info.dir_phase = uigetdir(pwd,'Select differential phase contrast projection Directory to Open');
 recon3D_diffphase(handles.dir_info.dir_phase,handles);
 % Update handles structure
 guidata(hObject, handles);
@@ -118,6 +123,7 @@ function btn_absorp_recon_Callback(hObject, eventdata, handles)
 % hObject    handle to btn_absorp_recon (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+handles.dir_info.dir_absorp = uigetdir(pwd,'Select absorption projection Directory to Open');
 recon3D_absorp(handles.dir_info.dir_absorp,handles);
 % Update handles structure
 guidata(hObject, handles);
